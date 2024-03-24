@@ -1,6 +1,7 @@
 from flask import redirect, url_for, flash, render_template, request, make_response, session
 from markethubfiles import app
 from markethubfiles.forms import FormLogin, SearchForm
+from markethubfiles.banco import banco_url
 import pandas as pd
 import psycopg2
 from flask_wtf.csrf import generate_csrf
@@ -10,7 +11,7 @@ import os
 def exist_prec(chave_nfe):
     # Conectar ao banco PostgreSQL
     postgres_conn = psycopg2.connect(
-        "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+        banco_url
     )
     postgres_cursor = postgres_conn.cursor()
 
@@ -34,7 +35,7 @@ def exist_prec(chave_nfe):
 def verificar_credenciais(email, senha):
     # Conectar ao banco PostgreSQL
     postgres_conn = psycopg2.connect(
-        "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+        banco_url
     )
     postgres_cursor = postgres_conn.cursor()
 
@@ -58,7 +59,7 @@ def verificar_credenciais(email, senha):
 def buscar_dados(codigo):
     # Conectar ao banco PostgreSQL
     postgres_conn = psycopg2.connect(
-        "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+        banco_url
     )
     postgres_cursor = postgres_conn.cursor()
 
@@ -149,7 +150,7 @@ def buscar_dados(codigo):
 def buscar_dados_impression():
     # Conectar ao banco PostgreSQL
     postgres_conn = psycopg2.connect(
-        "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+        banco_url
     )
     postgres_cursor = postgres_conn.cursor()
 
@@ -225,7 +226,7 @@ def buscar_dados_impression():
 def infos_aux():
     # Conectar ao banco PostgreSQL
     postgres_conn = psycopg2.connect(
-        "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+        banco_url
     )
     postgres_cursor = postgres_conn.cursor()
     dataframe = session.get('dataframe')
@@ -465,7 +466,7 @@ def finalizar_precificacao():
     if dataframe is not None:
         # Conectar ao banco de dados
         postgres_conn = psycopg2.connect(
-            "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+            banco_url
         )
         with postgres_conn.cursor() as cursor:
             chave_nfe = dataframe['Chave'].iloc[0]  # Obter o valor da chave da primeira linha
@@ -525,7 +526,7 @@ def precificacao():
 
         if not df_validate.empty:
             postgres_conn = psycopg2.connect(
-                "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
+                banco_url
             )
             postgres_cursor = postgres_conn.cursor()
             # Fazendo alguns tratamentos no DF

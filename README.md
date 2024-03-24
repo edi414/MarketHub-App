@@ -5,7 +5,7 @@
 
 https://github.com/edi414/ERP_Automation/assets/80610321/09f24308-127b-483f-9f80-c7745f461f17
 
-The idea of the System is:
+The idea of the system is:
 
 _"This system addresses the challenge of consolidating multiple decentralized and disconnected systems, thereby reducing operational inefficiencies and the need for manual, unsupervised tasks"._
 
@@ -25,7 +25,7 @@ Connect with me at [LinkedIn](https://www.linkedin.com/in/edivaldo-bezerra/).
 
 This project is not open source, a significant portion of the code is restricted to the client.
 
-## Some Observations about this Robot
+## Some Observations about this system
 
 1 - This project was developed for a specific client, and therefore, the complete content is restricted. Anyway, feel free to reach out with any questions or suggestions.
 

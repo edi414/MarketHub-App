@@ -1,0 +1,1 @@
+banco_url = "postgresql://postgres:G1CG2B*6d6GEDdABGcf--dA5cb*5bEf6@monorail.proxy.rlwy.net:48186/railway"
