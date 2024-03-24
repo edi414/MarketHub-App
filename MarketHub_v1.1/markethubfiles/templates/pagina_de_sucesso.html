@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucesso!</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS personalizado para alterar a fonte -->
+    <style>
+        /* Seletor para o texto dentro do jumbotron */
+        .jumbotron {
+            font-family: 'Josefin Sans', sans-serif; /* Definindo Josefin Sans como fonte */
+        }
+    </style>
+    <!-- Fonte Josefin Sans do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Operação concluída com sucesso!</h1>
+            <p class="lead">Obrigado por usar o sistema de precificação. Qualquer dúvida ou sugestão é só falar!</p>
+            <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="/" role="button">Ir para a página inicial</a>
+                <a class="btn btn-secondary btn-lg" href="/precificacao" role="button">Voltar para a página de precificação</a>
+            </p>
+            <!-- Botão para imprimir o espelho da nota fiscal -->
+            <form method="POST" action="{{ url_for('imprimir_espelho_nota_fiscal') }}" target="_blank">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-success">Imprimir Espelho de Nota Fiscal</button>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

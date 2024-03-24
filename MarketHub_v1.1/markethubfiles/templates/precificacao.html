@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <style>
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="bg-danger text-white text-center p-3">
+        <h4 class="m-0">Precificação nota fiscal: {% if codigo %}{{ codigo }}{% else %} | busque um código{% endif %}</h4>
+    </div>
+    <div class="col">
+            <form method="POST" action="{{ url_for('precificacao') }}" class="border p-4 mt-2">
+                {{ form.csrf_token }}
+                <legend>Busca</legend>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="search" class="form-control-label">Search</label>
+                        {% if request.form.errors %}
+                            <input type="text" name="search" class="form-control is-invalid" value="{{ request.form['search'] }}">
+                            <div class="invalid-feedback">
+                                {% for erro in request.form.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <input type="text" name="search" class="form-control" value="{{ request.form['search'] }}">
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+        </div>
+
+    {% if dataframe is not none and not dataframe.empty %}
+
+        <!-- Cria uma tabela com campos de entrada e um botão de confirmação para cada linha -->
+        <form method="POST" action="{{ url_for('confirmar_operacao') }}">
+            {{ form.csrf_token }}
+            <!-- Adiciona um campo oculto para armazenar o código -->
+            <input type="hidden" name="codigo" value="{{ codigo }}">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <!-- Inclua os cabeçalhos das colunas do DataFrame -->
+                         {% for column in dataframe.columns %}
+                            {% if column != 'Chave' and column != 'Preço compra' and column != 'Preço mínimo' and column != 'Qtd embalagem' %}
+                                <th>{{ column }}</th>
+                            {% endif %}
+                        {% endfor %}
+                        <th>Preço Venda</th>
+                        <th>Fator Correto</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Itera sobre as linhas do DataFrame -->
+                    {% for index, row in dataframe.iterrows() %}
+                        <tr {% if row['confirmada'] %}style="background-color: #ccffcc;"{% endif %}>
+                            <!-- Inclua os valores das colunas do DataFrame -->
+                            {% for column in dataframe.columns %}
+                                {% if column != 'Chave' and column != 'Preço compra' and column != 'Preço mínimo' and column != 'Qtd embalagem' %}
+                                    <td>{{ row[column] }}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- Adiciona campos de entrada para o "preço calculado" e o "fator_correto" -->
+                            <td><input type="text" name="preco_{{ index }}"></td>
+                            <td><input type="text" name="fator_{{ index }}"></td>
+                            <!-- Adiciona um botão de confirmação para a linha -->
+                            <td>
+                                <button type="submit" name="confirmar" value="{{ loop.index0 }}">Confirmar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+
+        <!-- Adiciona um botão de finalizar precificação que só pode ser pressionado se todas as linhas estiverem confirmadas -->
+        <form id="finalizar-precificacao-form" method="POST" action="{{ url_for('finalizar_precificacao') }}">
+            {{ form.csrf_token }}
+            <button type="submit" name="finalizar" {% if not operacao_confirmada %}disabled{% endif %}>Finalizar Precificação</button>
+        </form>
+
+    {% else %}
+        <!-- Adicione aqui uma mensagem para o caso de o dataframe estar vazio -->
+    {% endif %}
+
+    <!-- Adiciona mensagem de erro -->
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+{% endblock %}

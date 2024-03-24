@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espelho de nota fiscal eletrônica | Supermercado Popular</title>
+  <!-- Adicionando link para o Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #ffffff; /* Branco */
+      color: #343a40; /* Cinza escuro */
+      margin: 0.02cm; /* Margem de 0.02cm */
+      font-family: 'Josefin Sans', sans-serif; /* Define a fonte Josefin Sans */
+      position: relative; /* Adicionando posição relativa ao corpo */
+    }
+    .table {
+      background-color: #ffffff; /* Branco */
+      color: #343a40; /* Cinza escuro */
+      table-layout: auto; /* Ajuste automático das colunas */
+    }
+    .table thead th {
+      background-color: #701517; /* Vinho escuro */
+      color: #ffffff; /* Branco */
+    }
+    .table tbody tr:nth-child(odd) {
+      background-color: #f8f9fa; /* Cinza claro */
+    }
+    .table th {
+      color: #ffffff; /* Branco | define a cor da fonte das colunas */
+      font-weight: bold; /* Negrito */
+    }
+    .table td {
+      color: #000000; /* Preto */
+    }
+    .custom-heading {
+      color: #701517; /* Cor do vinho */
+      font-weight: bold; /* Negrito */
+    }
+    .custom-subheading {
+      color: #000000; /* Cor do preto */
+      margin-bottom: 5px; /* Espaçamento inferior */
+    }
+    .logo {
+      position: absolute; /* Define a posição como absoluta */
+      top: 20px; /* Distância do topo */
+      right: 20px; /* Distância da direita */
+      width: 150px; /* Largura da imagem */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="mt-5 mb-3 custom-heading">Espelho de nota fiscal eletrônica | Supermercado Popular</h2>
+    <h6 class="mb-2 custom-subheading"><strong>Nota fiscal:</strong> {{ chave_nfe }}</h6>
+    <h6 class="mb-2 custom-subheading"><strong>Fornecedor:</strong> {{ fornecedor }}</h6>
+    <h6 class="mb-2 custom-subheading"><strong>Data e hora de conferência:</strong> {{ data_hora_confe }}</h6>
+    <h6 class="mb-2 custom-subheading"><strong>Responsável pela conferência:</strong> {{ responsavel_confe }}</h6>
+    <h6 class="mb-2 custom-subheading"><strong>Data de emissão:</strong> {{ data_emissao }}</h6>
+    <h6 class="mb-2 custom-subheading"><strong>CNPJ Cliente:</strong> {{ cnpj_cliente }}</h6>
+    <div class="table-responsive">
+       <table class="table table-bordered table-sm">
+        <thead class="thead-dark">
+          <tr>
+            {% for col in dataframe.columns %}
+              {% if col != 'fator_conversao' and col != 'v_icms_st' and col != 'valor_ipi' and col != 'Preço compra' and col != 'Preço mínimo' and col != 'Qtd embalagem' %}
+                <th>{{ col }}</th>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for index, row in dataframe.iterrows() %}
+          <tr>
+            {% for col in dataframe.columns %}
+              {% if col != 'fator_conversao' and col != 'v_icms_st' and col != 'valor_ipi' and col != 'Preço compra' and col != 'Preço mínimo' and col != 'Qtd embalagem' %}
+                <td>{{ row[col] }}</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="{{ dataframe.shape[1] }}">Total de produtos distintos: {{ dataframe.shape[0] }}</td>
+          </tr>
+          <tr>
+            <td colspan="{{ dataframe.shape[1] }}">Total em reais da nota: R$ {{ valor_total }}</td>
+          </tr>
+          <tr>
+            <td colspan="{{ dataframe.shape[1] }}">Total desconto da nota: R$ {{ valor_desconto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <img src="https://i.imgur.com/40WwVlg.png" alt="Logo do Mercado" class="img-fluid logo">
+</body>
+</html>

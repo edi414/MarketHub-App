@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Precificação | Supermercado Popular</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Link para a fonte Josefin Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+
+    {% block head %}
+    <!-- Estilo para aplicar a fonte Josefin Sans -->
+    <style>
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        {% with mensagens = get_flashed_messages(with_categories=True) %}
+            {% if mensagens %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="alert {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    <script>
+        // Ajustar o espaçamento entre a navbar e o texto
+        document.addEventListener('DOMContentLoaded', function() {
+            var navbarHeight = document.querySelector('.navbar').offsetHeight;
+            var loginHeading = document.getElementById('login-heading');
+            loginHeading.style.marginTop = 20 + 'px'; // Ajuste conforme necessário
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
