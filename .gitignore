@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+banco.py
 
 # C extensions
 *.so
