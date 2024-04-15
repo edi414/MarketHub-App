@@ -1,4 +1,4 @@
-# MarketHub
+# MarketHub (Web Development)
  A central system for various supermarket operations, this system was created to ensure the unified management of all systems that support the company's management.
 
 ## About this Project
